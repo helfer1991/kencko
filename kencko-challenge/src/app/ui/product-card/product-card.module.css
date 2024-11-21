@@ -1,0 +1,20 @@
+.card {
+	align-items: center;
+	background: #f4f0eb;
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	padding: 16px;
+}
+
+.title {
+	color: black;
+	margin-bottom: 16px;
+	font-size: 16px;
+}
+
+.price {
+	color: black;
+	margin-top: 16px;
+	font-size: 16px;
+}
