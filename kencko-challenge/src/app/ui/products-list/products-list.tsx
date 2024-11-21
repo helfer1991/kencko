@@ -42,7 +42,7 @@ type JunipInfo = {
 	rating_average: number;
 };
 
-type Product = {
+export type Product = {
 	id: string;
 	name: string;
 	perks: string;
@@ -78,7 +78,7 @@ type Product = {
 };
 
 export default async function ProductsList() {
-	const products = await getProducts();
+	const products: Array<Product> = await getProducts();
 
 	const uniqueCategories = Array.from(
 		new Set<string>(products.map((product: Product) => product.category))
@@ -90,10 +90,8 @@ export default async function ProductsList() {
 		<div className={styles.container}>
 			{products.map((product) => (
 				<ProductCard
-					imageUrl={product.background.url}
+					{...product}
 					key={product.id}
-					title={product.name}
-					price={product.market_prices.full_price}
 				/>
 			))}
 		</div>

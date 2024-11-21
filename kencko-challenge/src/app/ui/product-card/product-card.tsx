@@ -1,25 +1,21 @@
 import Image from 'next/image';
 import styles from './product-card.module.css';
 import { ProductCardButton } from './product-card-button';
+import type { Product } from '../products-list/products-list';
 
-type Product = {
-	imageUrl: string;
-	price: number;
-	title: string;
-};
-
-export function ProductCard({ title, imageUrl, price }: Product) {
+export function ProductCard(product: Product) {
 	return (
 		<div className={styles.card}>
-			<h6 className={styles.title}>{title}</h6>
+			<h6 className={styles.title}>{product.name}</h6>
 			<Image
-				alt={`${title}-image`}
-				src={imageUrl}
+				alt={`${product.name}-image`}
+				className={styles.image}
+				src={product.background.url}
 				width={220}
 				height={220}
 			/>
-			<p className={styles.price}>{price}€</p>
-			<ProductCardButton productId={title} />
+			<p className={styles.price}>{product.market_prices.full_price}€</p>
+			<ProductCardButton productId={product.name} />
 		</div>
 	);
 }
