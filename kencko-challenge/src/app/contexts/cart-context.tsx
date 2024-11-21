@@ -4,11 +4,15 @@ import { createContext, useContext, useState, useEffect } from 'react';
 type CartItem = {
 	productId: string;
 	quantity: number;
+	price: number;
+	category: string;
+	imageUrl: string;
+	name: string;
 };
 
 type CartContextType = {
 	items: CartItem[];
-	updateItem: (productId: string, quantity: number) => Promise<void>;
+	updateItem: (cartItem: CartItem) => Promise<void>;
 	getItemQuantity: (productId: string) => number;
 	totalItems: number;
 };
@@ -26,20 +30,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 		}
 	}, []);
 
-	const updateItem = async (productId: string, quantity: number) => {
+	const updateItem = async (cartItem: CartItem) => {
 		const newItems = [...items];
 		const existingIndex = newItems.findIndex(
-			(item) => item.productId === productId
+			(item) => item.productId === cartItem.productId
 		);
 
 		if (existingIndex >= 0) {
-			if (quantity === 0) {
+			if (cartItem.quantity === 0) {
 				newItems.splice(existingIndex, 1);
 			} else {
-				newItems[existingIndex].quantity = quantity;
+				newItems[existingIndex].quantity = cartItem.quantity;
 			}
-		} else if (quantity > 0) {
-			newItems.push({ productId, quantity });
+		} else if (cartItem.quantity > 0) {
+			newItems.push(cartItem);
 		}
 
 		setItems(newItems);

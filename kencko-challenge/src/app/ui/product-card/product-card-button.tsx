@@ -1,41 +1,46 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '@/app/contexts/cart-context';
+import type { Product } from '../products-list/products-list';
 import styles from './product-card-button.module.css';
 
-type ProductCardButtonProps = {
-	productId: string;
-};
+const createCartItem = (newQuantity: number, product: Product) => ({
+	productId: product.id,
+	quantity: newQuantity,
+	price: product.market_prices.full_price,
+	category: product.category,
+	imageUrl: product.background.url,
+	name: product.name,
+});
 
-export function ProductCardButton({ productId }: ProductCardButtonProps) {
-	const [isAdded, setIsAdded] = useState<boolean>(false);
-	const [quantity, setQuantity] = useState<number>(1);
+export function ProductCardButton(product: Product) {
+	const [showControls, setShowControls] = useState<boolean>(false);
+	const [currentQuantity, setCurrentQuantity] = useState<number>(1);
 	const { getItemQuantity, updateItem } = useCart();
+	const quantity = getItemQuantity(product.id);
 
 	const handleAddToBasket = () => {
-		setIsAdded(true);
-		updateItem(productId, 1);
+		setShowControls(true);
+		setCurrentQuantity(1);
+		updateItem(createCartItem(quantity + 1, product));
 	};
 
 	const handleIncrement = () => {
-		const newQuantity = quantity + 1;
-		setQuantity(newQuantity);
-		updateItem(productId, quantity + 1);
-		console.log(quantity);
+		setCurrentQuantity((prevQuantity) => prevQuantity + 1);
+		updateItem(createCartItem(quantity + 1, product));
 	};
 
 	const handleDecrement = () => {
 		if (quantity > 0) {
 			const newQuantity = quantity - 1;
-			updateItem(productId, quantity - 1);
-			setQuantity(newQuantity);
+			updateItem(createCartItem(newQuantity, product));
 			if (newQuantity === 0) {
-				setIsAdded(false);
+				setShowControls(false);
 			}
 		}
 	};
 
-	if (!isAdded) {
+	if (!showControls) {
 		return (
 			<button
 				onClick={handleAddToBasket}
@@ -54,7 +59,7 @@ export function ProductCardButton({ productId }: ProductCardButtonProps) {
 			>
 				-
 			</button>
-			<span className={styles.quantity}>{quantity}</span>
+			<span className={styles.quantity}>{currentQuantity}</span>
 			<button
 				onClick={handleIncrement}
 				className={styles.controlButton}

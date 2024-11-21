@@ -15,7 +15,7 @@ export function ProductCard(product: Product) {
 				height={220}
 			/>
 			<p className={styles.price}>{product.market_prices.full_price}€</p>
-			<ProductCardButton productId={product.name} />
+			<ProductCardButton {...product} />
 		</div>
 	);
 }
