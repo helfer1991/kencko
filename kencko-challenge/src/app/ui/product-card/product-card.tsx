@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styles from './product-card.module.css';
-import { ProductCardButton } from './product-card-button';
+import { ProductCardButton } from './product-card-button/product-card-button';
 import type { Product } from '../products-list/products-list';
 
 export function ProductCard(product: Product) {

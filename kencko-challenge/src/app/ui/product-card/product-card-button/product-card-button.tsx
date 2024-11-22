@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useCart } from '@/app/contexts/cart-context';
-import type { Product } from '../products-list/products-list';
+import type { Product } from '../../products-list/products-list';
 import styles from './product-card-button.module.css';
 
 const createCartItem = (newQuantity: number, product: Product) => ({
@@ -15,7 +15,7 @@ const createCartItem = (newQuantity: number, product: Product) => ({
 
 export function ProductCardButton(product: Product) {
 	const [showControls, setShowControls] = useState<boolean>(false);
-	const { getItemQuantity, updateItem, totalItems } = useCart();
+	const { getItemQuantity, updateItem } = useCart();
 	const quantity = getItemQuantity(product.id);
 
 	const handleAddToBasket = () => {

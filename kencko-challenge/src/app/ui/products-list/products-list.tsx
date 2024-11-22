@@ -2,11 +2,11 @@ import { ProductCard } from '../product-card/product-card';
 import { getProducts } from '@/lib/api/fetchProducts';
 import styles from './products-list.module.css';
 
-type CategoryMapping = {
+export type CategoryMapping = {
 	[key: string]: string;
 };
 
-const categoryDisplayNames: CategoryMapping = {
+export const categoryDisplayNames: CategoryMapping = {
 	dtc_smoothies: 'Smoothies',
 	dtc_fruit_snacks: 'Fruit Snacks',
 	dtc_oats: 'Oats',
@@ -21,12 +21,10 @@ type Image = {
 	title: string;
 	description: string;
 	url: string;
-	file: any; // You can type this more specifically if needed
+	file: any;
 };
 
 type Benefit = {
-	// Type this based on what's in the [Object]
-	// For example:
 	title?: string;
 	description?: string;
 };

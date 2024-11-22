@@ -6,6 +6,8 @@ import { useEffect } from 'react';
 import { CartPortal } from '../cart-portal/cart-portal';
 import type { CartItem } from '@/app/contexts/cart-context';
 import { freeBottle } from '@/app/contexts/cart-context';
+import type { Product } from '../products-list/products-list';
+import MissingCategories from '../missing-categories/missing-categories';
 
 type ShoppingCartProps = {
 	isOpen: boolean;
@@ -14,7 +16,6 @@ type ShoppingCartProps = {
 
 const calculateItemTotal = (item: CartItem) => {
 	if (item.productId === freeBottle.productId) {
-		// For universal shaker bottle, first one is free
 		const freeBottles = 1;
 		const paidBottles = Math.max(0, item.quantity - freeBottles);
 		return item.price * paidBottles;
@@ -56,77 +57,80 @@ export function ShoppingCart({ isOpen, onClose }: ShoppingCartProps) {
 						<X size={24} />
 					</button>
 				</div>
+				<div className={styles.cartContent}>
+					<div className={styles.cartItems}>
+						{items.length === 0 ? (
+							<p className={styles.emptyCart}>Your cart is empty</p>
+						) : (
+							<div className={styles.itemsList}>
+								{items.map((item) => (
+									<div
+										key={item.productId}
+										className={styles.cartItem}
+									>
+										<div className={styles.productImage}>
+											<img
+												src={item.imageUrl}
+												alt={item.name}
+											/>
+										</div>
 
-				<div className={styles.cartItems}>
-					{items.length === 0 ? (
-						<p className={styles.emptyCart}>Your cart is empty</p>
-					) : (
-						<div className={styles.itemsList}>
-							{items.map((item) => (
-								<div
-									key={item.productId}
-									className={styles.cartItem}
-								>
-									<div className={styles.productImage}>
-										<img
-											src={item.imageUrl}
-											alt={item.name}
-										/>
-									</div>
+										<div className={styles.productDetails}>
+											<h3>{item.name}</h3>
+											<p className={styles.price}>
+												${item.price.toFixed(2)} each
+												{item.productId === '378tkYgDUBncraADorGS3k' && (
+													<span className={styles.freeBottleText}>
+														(First bottle free!)
+													</span>
+												)}
+											</p>
 
-									<div className={styles.productDetails}>
-										<h3>{item.name}</h3>
-										<p className={styles.price}>
-											${item.price.toFixed(2)} each
-											{item.productId === '378tkYgDUBncraADorGS3k' && (
-												<span className={styles.freeBottleText}>
-													(First bottle free!)
-												</span>
-											)}
-										</p>
+											<div className={styles.quantityControls}>
+												<button
+													onClick={() =>
+														updateQuantity(
+															item.productId,
+															Math.max(0, (item.quantity || 1) - 1)
+														)
+													}
+													className={styles.quantityButton}
+												>
+													-
+												</button>
+												<span className={styles.quantity}>{item.quantity}</span>
+												<button
+													onClick={() =>
+														updateQuantity(
+															item.productId,
+															(item.quantity || 1) + 1
+														)
+													}
+													className={styles.quantityButton}
+												>
+													+
+												</button>
+											</div>
+										</div>
 
-										<div className={styles.quantityControls}>
+										<div className={styles.priceSection}>
+											<p className={styles.totalPrice}>
+												${calculateItemTotal(item).toFixed(2)}
+											</p>
 											<button
-												onClick={() =>
-													updateQuantity(
-														item.productId,
-														Math.max(0, (item.quantity || 1) - 1)
-													)
-												}
-												className={styles.quantityButton}
+												onClick={() => removeFromCart(item.productId)}
+												className={styles.removeButton}
 											>
-												-
-											</button>
-											<span className={styles.quantity}>{item.quantity}</span>
-											<button
-												onClick={() =>
-													updateQuantity(
-														item.productId,
-														(item.quantity || 1) + 1
-													)
-												}
-												className={styles.quantityButton}
-											>
-												+
+												Remove
 											</button>
 										</div>
 									</div>
+								))}
+							</div>
+						)}
+					</div>
 
-									<div className={styles.priceSection}>
-										<p className={styles.totalPrice}>
-											${calculateItemTotal(item).toFixed(2)}
-										</p>
-										<button
-											onClick={() => removeFromCart(item.productId)}
-											className={styles.removeButton}
-										>
-											Remove
-										</button>
-									</div>
-								</div>
-							))}
-						</div>
-					)}
+					<MissingCategories cartItems={items} />
 				</div>
 
 				<div className={styles.cartFooter}>

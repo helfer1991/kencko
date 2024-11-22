@@ -1,0 +1,104 @@
+.carouselSection {
+	margin-bottom: 2rem;
+}
+
+.categoryTitle {
+	font-size: 1rem;
+	font-weight: 500;
+	margin-bottom: 1rem;
+	text-transform: capitalize;
+}
+
+.carouselContainer {
+	position: relative;
+	padding: 0 2rem;
+}
+
+.carouselTrack {
+	display: flex;
+	overflow-x: scroll;
+	scroll-snap-type: x mandatory;
+	gap: 1rem;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	padding: 1rem 0;
+}
+
+.carouselTrack::-webkit-scrollbar {
+	display: none;
+}
+
+.carouselItem {
+	flex: 0 0 200px;
+	scroll-snap-align: start;
+	padding: 1rem;
+	border: 1px solid #eee;
+	border-radius: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	background: white;
+}
+
+.productImage {
+	width: 100px;
+	height: 100px;
+	object-fit: contain;
+	margin-bottom: 0.5rem;
+}
+
+.productName {
+	font-weight: 500;
+	margin-bottom: 0.25rem;
+	font-size: 0.875rem;
+}
+
+.productPrice {
+	color: #666;
+	margin-bottom: 0.5rem;
+	font-size: 0.875rem;
+}
+
+.carouselButton {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	background: white;
+	border: 1px solid #eee;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.2s;
+	z-index: 1;
+}
+
+.carouselButton:hover {
+	background: #f3f4f6;
+}
+
+.carouselButtonLeft {
+	left: 0;
+}
+
+.carouselButtonRight {
+	right: 0;
+}
+
+.addToCartButton {
+	padding: 0.5rem 1rem;
+	background: #3b82f6;
+	color: white;
+	border-radius: 0.25rem;
+	width: 100%;
+	transition: background 0.2s;
+	font-size: 0.875rem;
+}
+
+.addToCartButton:hover {
+	background: #2563eb;
+}

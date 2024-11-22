@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import shoppingCart from './cart-icon.svg';
 import { useCart } from '@/app/contexts/cart-context';
 import { ShoppingCart } from '../../shopping-cart/shopping-cart';
 import Image from 'next/image';
@@ -18,7 +17,7 @@ export default function ShoppingCartBasketIcon() {
 			>
 				<Image
 					alt='shopping-cart-logo'
-					src={shoppingCart}
+					src='/images/cart-icon.svg'
 					height={40}
 					width={40}
 				/>

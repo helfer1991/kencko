@@ -1,0 +1,11 @@
+.suggestionsSection {
+	padding: 1rem;
+	border-top: 1px solid #eee;
+	margin-top: 2rem;
+}
+
+.suggestionsTitle {
+	font-size: 1.25rem;
+	font-weight: 600;
+	margin-bottom: 1rem;
+}

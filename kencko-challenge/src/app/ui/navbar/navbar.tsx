@@ -1,4 +1,3 @@
-import kenckoLogo from './kencko-logo.svg';
 import Image from 'next/image';
 import styles from './navbar.module.css';
 import ShoppingCartBasketIcon from './shopping-cart-basket-icon/shopping-cart-basket-icon';
@@ -8,7 +7,7 @@ export default function Navbar() {
 		<nav className={styles.navbar}>
 			<Image
 				alt='kencko-logo'
-				src={kenckoLogo}
+				src='/images/kencko-logo.svg'
 				height={20}
 				width={100}
 			/>
