@@ -4,14 +4,22 @@ import { X } from 'lucide-react';
 import styles from './shopping-cart.module.css';
 import { useEffect } from 'react';
 import { CartPortal } from '../cart-portal/cart-portal';
+import type { CartItem } from '@/app/contexts/cart-context';
+import { freeBottle } from '@/app/contexts/cart-context';
 
 type ShoppingCartProps = {
 	isOpen: boolean;
 	onClose: () => void;
 };
 
-const calculateItemTotal = (price: number, quantity: number) => {
-	return price * quantity;
+const calculateItemTotal = (item: CartItem) => {
+	if (item.productId === freeBottle.productId) {
+		// For universal shaker bottle, first one is free
+		const freeBottles = 1;
+		const paidBottles = Math.max(0, item.quantity - freeBottles);
+		return item.price * paidBottles;
+	}
+	return item.price * item.quantity;
 };
 
 export function ShoppingCart({ isOpen, onClose }: ShoppingCartProps) {
@@ -26,7 +34,7 @@ export function ShoppingCart({ isOpen, onClose }: ShoppingCartProps) {
 	}, [isOpen]);
 
 	const grandTotal = items.reduce((total, item) => {
-		return total + calculateItemTotal(item.price, item.quantity);
+		return total + calculateItemTotal(item);
 	}, 0);
 
 	return (
@@ -70,6 +78,11 @@ export function ShoppingCart({ isOpen, onClose }: ShoppingCartProps) {
 										<h3>{item.name}</h3>
 										<p className={styles.price}>
 											${item.price.toFixed(2)} each
+											{item.productId === '378tkYgDUBncraADorGS3k' && (
+												<span className={styles.freeBottleText}>
+													(First bottle free!)
+												</span>
+											)}
 										</p>
 
 										<div className={styles.quantityControls}>
@@ -101,8 +114,7 @@ export function ShoppingCart({ isOpen, onClose }: ShoppingCartProps) {
 
 									<div className={styles.priceSection}>
 										<p className={styles.totalPrice}>
-											$
-											{calculateItemTotal(item.price, item.quantity).toFixed(2)}
+											${calculateItemTotal(item).toFixed(2)}
 										</p>
 										<button
 											onClick={() => removeFromCart(item.productId)}

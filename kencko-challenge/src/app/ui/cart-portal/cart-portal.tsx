@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 export function CartPortal({ children }: { children: React.ReactNode }) {
-	const [mounted, setMounted] = useState(false);
+	const [mounted, setMounted] = useState<boolean>(false);
 
 	useEffect(() => {
 		setMounted(true);

@@ -207,3 +207,9 @@
 .checkoutButton:hover {
 	background-color: #2563eb;
 }
+
+.freeBottleText {
+	color: #22c55e;
+	font-size: 0.85em;
+	margin-left: 0.5rem;
+}

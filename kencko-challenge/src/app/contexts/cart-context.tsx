@@ -1,7 +1,7 @@
 'use client';
 import { createContext, useContext, useState, useEffect } from 'react';
 
-type CartItem = {
+export type CartItem = {
 	productId: string;
 	quantity: number;
 	price: number;
@@ -17,6 +17,16 @@ type CartContextType = {
 	totalItems: number;
 	removeFromCart: (productId: string) => void;
 	updateQuantity: (productId: string, newQuantity: number) => void;
+};
+
+export const freeBottle = {
+	productId: '378tkYgDUBncraADorGS3k',
+	quantity: 1,
+	price: 14.88,
+	category: 'bottle',
+	imageUrl:
+		'https://images.ctfassets.net/445g3vkzkqor/1kWoMPEiqY0HddozjIhmQq/22ed3d116329a946a7f110d07033ce80/WEB_UniversalBottle_ProductP_Slideshow-1.webp',
+	name: 'universal shaker bottle',
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -37,6 +47,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 		const existingIndex = newItems.findIndex(
 			(item) => item.productId === cartItem.productId
 		);
+
+		if (items.length === 0) {
+			newItems.push(freeBottle);
+		}
 
 		if (existingIndex >= 0) {
 			if (cartItem.quantity === 0) {

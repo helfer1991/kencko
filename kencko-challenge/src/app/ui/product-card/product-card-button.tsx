@@ -15,7 +15,7 @@ const createCartItem = (newQuantity: number, product: Product) => ({
 
 export function ProductCardButton(product: Product) {
 	const [showControls, setShowControls] = useState<boolean>(false);
-	const { getItemQuantity, updateItem } = useCart();
+	const { getItemQuantity, updateItem, totalItems } = useCart();
 	const quantity = getItemQuantity(product.id);
 
 	const handleAddToBasket = () => {
