@@ -15,6 +15,8 @@ type CartContextType = {
 	updateItem: (cartItem: CartItem) => Promise<void>;
 	getItemQuantity: (productId: string) => number;
 	totalItems: number;
+	removeFromCart: (productId: string) => void;
+	updateQuantity: (productId: string, newQuantity: number) => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -54,11 +56,43 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 		return items.find((item) => item.productId === productId)?.quantity || 0;
 	};
 
+	const removeFromCart = (productId: string) => {
+		const newItems = items.filter((item) => item.productId !== productId);
+		setItems(newItems);
+		localStorage.setItem('cart', JSON.stringify(newItems));
+	};
+
+	const updateQuantity = (productId: string, newQuantity: number) => {
+		const newItems = [...items];
+		const existingIndex = newItems.findIndex(
+			(item) => item.productId === productId
+		);
+
+		if (existingIndex >= 0) {
+			if (newQuantity === 0) {
+				// If quantity is 0, remove the item
+				newItems.splice(existingIndex, 1);
+			} else {
+				// Update quantity
+				newItems[existingIndex].quantity = newQuantity;
+			}
+			setItems(newItems);
+			localStorage.setItem('cart', JSON.stringify(newItems));
+		}
+	};
+
 	const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
 	return (
 		<CartContext.Provider
-			value={{ items, updateItem, getItemQuantity, totalItems }}
+			value={{
+				items,
+				updateItem,
+				getItemQuantity,
+				totalItems,
+				removeFromCart,
+				updateQuantity,
+			}}
 		>
 			{children}
 		</CartContext.Provider>

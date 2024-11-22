@@ -22,6 +22,7 @@ export default function RootLayout({
 				<CartProvider>
 					<Navbar />
 					<main className='pt-20'>{children}</main>
+					<div id='cart-portal' />
 				</CartProvider>
 			</body>
 		</html>

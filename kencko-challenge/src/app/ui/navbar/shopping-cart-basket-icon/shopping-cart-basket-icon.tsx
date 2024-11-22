@@ -1,15 +1,21 @@
 'use client';
+import { useState } from 'react';
 import shoppingCart from './cart-icon.svg';
 import { useCart } from '@/app/contexts/cart-context';
+import { ShoppingCart } from '../../shopping-cart/shopping-cart';
 import Image from 'next/image';
 
 export default function ShoppingCartBasketIcon() {
 	const { totalItems } = useCart();
+	const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
 
 	return (
 		<>
 			<div className='text-xl font-bold'>Shop</div>
-			<button className='relative p-2 hover:bg-gray-100 rounded-full transition-colors'>
+			<button
+				className='relative p-2 hover:bg-gray-100 rounded-full transition-colors'
+				onClick={() => setIsCartOpen(!isCartOpen)}
+			>
 				<Image
 					alt='shopping-cart-logo'
 					src={shoppingCart}
@@ -22,6 +28,11 @@ export default function ShoppingCartBasketIcon() {
 					</span>
 				)}
 			</button>
+
+			<ShoppingCart
+				isOpen={isCartOpen}
+				onClose={() => setIsCartOpen(false)}
+			/>
 		</>
 	);
 }
