@@ -63,7 +63,7 @@ export type Product = {
 	preparingVideo: Image;
 	suggestionImage: Image | null;
 	benefits: Benefit[];
-	ingredients: null | any; // Type more specifically if needed
+	ingredients: null | any;
 	inorganicIngredients: null | any;
 	ingredientsShort: null | any;
 	nutritionalInformation: null | any;
@@ -84,15 +84,40 @@ export default async function ProductsList() {
 		new Set<string>(products.map((product: Product) => product.category))
 	);
 
-	console.log(products.map((product) => product.market_prices.full_price));
-
 	return (
-		<div className={styles.container}>
-			{products.map((product) => (
-				<ProductCard
-					{...product}
-					key={product.id}
-				/>
+		<div>
+			<nav className={styles.categoryNav}>
+				{uniqueCategories.map((category) => (
+					<a
+						key={category}
+						href={`#${category}`}
+						className={styles.categoryLink}
+					>
+						{categoryDisplayNames[category] || category}
+					</a>
+				))}
+			</nav>
+
+			{uniqueCategories.map((category) => (
+				<section
+					key={category}
+					id={category}
+					className={styles.categorySection}
+				>
+					<h2 className={styles.categoryTitle}>
+						{categoryDisplayNames[category] || category}
+					</h2>
+					<div className={styles.productsGrid}>
+						{products
+							.filter((product) => product.category === category)
+							.map((product) => (
+								<ProductCard
+									{...product}
+									key={product.id}
+								/>
+							))}
+					</div>
+				</section>
 			))}
 		</div>
 	);

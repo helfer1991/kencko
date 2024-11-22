@@ -3,7 +3,7 @@ import shoppingCart from './cart-icon.svg';
 import { useCart } from '@/app/contexts/cart-context';
 import Image from 'next/image';
 
-export default function ShoppingCartBasket() {
+export default function ShoppingCartBasketIcon() {
 	const { totalItems } = useCart();
 
 	return (

@@ -1,7 +1,7 @@
 import kenckoLogo from './kencko-logo.svg';
 import Image from 'next/image';
 import styles from './navbar.module.css';
-import ShoppingCartBasket from './shopping-cart-basket/shopping-cart-basket';
+import ShoppingCartBasketIcon from './shopping-cart-basket-icon/shopping-cart-basket-icon';
 
 export default function Navbar() {
 	return (
@@ -13,7 +13,7 @@ export default function Navbar() {
 				width={100}
 			/>
 			<div className={styles.wrapper}>
-				<ShoppingCartBasket />
+				<ShoppingCartBasketIcon />
 			</div>
 		</nav>
 	);
