@@ -15,18 +15,15 @@ const createCartItem = (newQuantity: number, product: Product) => ({
 
 export function ProductCardButton(product: Product) {
 	const [showControls, setShowControls] = useState<boolean>(false);
-	const [currentQuantity, setCurrentQuantity] = useState<number>(1);
 	const { getItemQuantity, updateItem } = useCart();
 	const quantity = getItemQuantity(product.id);
 
 	const handleAddToBasket = () => {
 		setShowControls(true);
-		setCurrentQuantity(1);
 		updateItem(createCartItem(quantity + 1, product));
 	};
 
 	const handleIncrement = () => {
-		setCurrentQuantity((prevQuantity) => prevQuantity + 1);
 		updateItem(createCartItem(quantity + 1, product));
 	};
 
@@ -59,7 +56,7 @@ export function ProductCardButton(product: Product) {
 			>
 				-
 			</button>
-			<span className={styles.quantity}>{currentQuantity}</span>
+			<span className={styles.quantity}>{quantity}</span>
 			<button
 				onClick={handleIncrement}
 				className={styles.controlButton}

@@ -84,7 +84,7 @@ export default async function ProductsList() {
 		new Set<string>(products.map((product: Product) => product.category))
 	);
 
-	console.log(categoryDisplayNames[uniqueCategories[0]]);
+	console.log(products.map((product) => product.market_prices.full_price));
 
 	return (
 		<div className={styles.container}>
